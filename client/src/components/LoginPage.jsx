@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="w-20 h-20 mx-auto mb-5 rounded-3xl flex items-center justify-center
                           bg-gradient-to-br from-brand to-brand-dark
                           shadow-lg shadow-blue-500/30">
-            <span className="text-4xl">🛒</span>
+            <span className="text-3xl font-black text-white">XM</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-700">
             XMARKET <span className="text-brand">Support</span>

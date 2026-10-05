@@ -108,9 +108,12 @@ function wrapEmail(innerHtml) {
     <div style="background:#f4f6fa; padding:32px 16px; font-family:-apple-system,'Segoe UI',Arial,sans-serif;">
       <div style="max-width:620px; margin:auto; background:#ffffff; border-radius:14px; overflow:hidden;
                   border:1px solid #e5eaf2;">
-        <img src="${BANNER_URL}" alt="XMARKET Support"
-             width="620"
-             style="display:block; width:100%; border:0; margin:0;" />
+        <div style="background:linear-gradient(135deg,#1e3a8a,#2563eb); padding:8px 0; text-align:center;">
+          <img src="${BANNER_URL}" alt="XMARKET SUPPORT"
+               width="620"
+               style="display:block; width:100%; max-width:620px; height:auto;
+                      border:0; margin:0 auto;" />
+        </div>
         <div style="padding:36px 32px; color:#334155; font-size:14px; line-height:1.65;">
           ${innerHtml}
         </div>
@@ -203,7 +206,7 @@ function buildFilesHtml(payload) {
 function buildReceiptHtml(payload) {
   const {
     orderId, date, customerName, items, subtotal, discount, total,
-    paymentMethod, note, senderName, senderCompany,
+    paymentMethod, deliveryMethod, note, senderName, senderCompany,
   } = payload;
 
   const fmt = (n) =>
@@ -259,6 +262,14 @@ function buildReceiptHtml(payload) {
           ? `<tr>
                <td style="padding:4px 0; color:#94a3b8;">Payment</td>
                <td style="padding:4px 0; color:#0f172a; text-align:right;">${paymentMethod}</td>
+             </tr>`
+          : ''
+      }
+      ${
+        deliveryMethod
+          ? `<tr>
+               <td style="padding:4px 0; color:#94a3b8;">Delivery</td>
+               <td style="padding:4px 0; color:#0f172a; text-align:right;">${deliveryMethod}</td>
              </tr>`
           : ''
       }

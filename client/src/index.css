@@ -146,11 +146,13 @@ body {
   z-index: 200;
 }
 .nm-dropdown-panel {
+  z-index: 99999;
+  isolation: isolate;
+  transform: translateZ(0);
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  z-index: 9999;
   margin-top: 12px;
   background: var(--nm-bg);
   border-radius: 18px;
