@@ -7,25 +7,15 @@ export default function Navbar() {
     <nav className="w-full flex justify-center pt-8 pb-4 animate-fade-up">
       <div className="nm-flat flex items-center gap-2 px-4 py-3 flex-wrap justify-center">
         <NavLink to="/" end className={({isActive}) =>
-          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>
-          📤 Send
-        </NavLink>
+          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>🏠 Home</NavLink>
         <NavLink to="/upload" className={({isActive}) =>
-          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>
-          ☁️ Upload
-        </NavLink>
-        <NavLink to="/receipt" className={({isActive}) =>
-          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>
-          🧾 Receipt
-        </NavLink>
-        <NavLink to="/website" className={({isActive}) =>
-          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>
-          🌐 Website
-        </NavLink>
+          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>☁️ Upload</NavLink>
+        <NavLink to="/drive" className={({isActive}) =>
+          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>📁 Files</NavLink>
+        <NavLink to="/revoke" className={({isActive}) =>
+          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>🗑️ Revoke</NavLink>
         <NavLink to="/settings" className={({isActive}) =>
-          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>
-          ⚙️ Settings
-        </NavLink>
+          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>⚙️</NavLink>
       </div>
     </nav>
   );

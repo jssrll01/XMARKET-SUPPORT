@@ -5,7 +5,7 @@ const MAX_ATTEMPTS = 3;
 const LOCKOUT_SECONDS = 10;
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, autoLoggedOut, setAutoLoggedOut } = useAuth();
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [attempts, setAttempts] = useState(0);
@@ -75,6 +75,11 @@ export default function LoginPage() {
           <p className="text-sm text-gray-500 mt-2">
             Enter your access code to continue
           </p>
+          {autoLoggedOut && (
+            <p className="text-xs text-red-500 mt-3 bg-red-50 rounded-lg px-3 py-2 animate-fade-up">
+              ⏱️ Auto-logged out after 5 minutes of inactivity.
+            </p>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="nm-flat p-8 space-y-5 animate-fade-up">
