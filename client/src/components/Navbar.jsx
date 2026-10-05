@@ -8,8 +8,6 @@ export default function Navbar() {
       <div className="nm-flat flex items-center gap-2 px-4 py-3 flex-wrap justify-center">
         <NavLink to="/" end className={({isActive}) =>
           `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>🏠 Home</NavLink>
-        <NavLink to="/upload" className={({isActive}) =>
-          `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>☁️ Upload</NavLink>
         <NavLink to="/drive" className={({isActive}) =>
           `${linkBase} ${isActive ? 'nm-pressed text-brand' : 'hover:text-brand'}`}>📁 Files</NavLink>
         <NavLink to="/revoke" className={({isActive}) =>

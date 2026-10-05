@@ -148,67 +148,6 @@ app.get('/api/drive-files', async (req, res) => {
   }
 });
 
-// ============ DRIVE UPLOAD ============
-app.post('/api/drive-upload', upload.array('files', 20), async (req, res) => {
-  const tempPaths = (req.files || []).map((f) => f.path);
-  try {
-    if (!driveClient) {
-      tempPaths.forEach((p) => fs.unlink(p, () => {}));
-      return res.status(503).json({ success: false, error: 'Drive API not configured.' });
-    }
-    const folderId = process.env.DRIVE_FOLDER_ID;
-    if (!folderId) {
-      tempPaths.forEach((p) => fs.unlink(p, () => {}));
-      return res.status(400).json({ success: false, error: 'DRIVE_FOLDER_ID missing in .env' });
-    }
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ success: false, error: 'No files uploaded.' });
-    }
-
-    const uploaded = [];
-    const failed = [];
-
-    for (const f of req.files) {
-      try {
-        const result = await driveClient.files.create({
-          requestBody: {
-            name: f.originalname,
-            parents: [folderId],
-          },
-          media: {
-            mimeType: f.mimetype,
-            body: fs.createReadStream(f.path),
-          },
-          fields: 'id, name, webViewLink, size, mimeType',
-        });
-
-        uploaded.push({
-          id: result.data.id,
-          name: result.data.name,
-          link: result.data.webViewLink,
-          size: result.data.size ? Number(result.data.size) : 0,
-          mimeType: result.data.mimeType,
-        });
-      } catch (err) {
-        failed.push({ name: f.originalname, error: err.message });
-      }
-    }
-
-    tempPaths.forEach((p) => fs.unlink(p, () => {}));
-
-    res.json({
-      success: uploaded.length > 0,
-      message: `Uploaded ${uploaded.length}/${req.files.length}.${failed.length ? ` ${failed.length} failed.` : ''}`,
-      uploaded,
-      failed,
-    });
-  } catch (err) {
-    console.error('Upload error:', err);
-    tempPaths.forEach((p) => fs.unlink(p, () => {}));
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
 // ============ DRIVE SHARE ============
 app.post('/api/drive-share', async (req, res) => {
   try {

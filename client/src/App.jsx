@@ -5,7 +5,6 @@ import PageTransition from './components/PageTransition';
 import InstallPrompt from './components/InstallPrompt';
 import AuthGate from './components/AuthGate';
 import HomePage from './pages/HomePage';
-import UploadPage from './pages/UploadPage';
 import DriveFilesPage from './pages/DriveFilesPage';
 import RevokeAccessPage from './pages/RevokeAccessPage';
 import SettingsPage from './pages/SettingsPage';
@@ -17,7 +16,6 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
-        <Route path="/upload" element={<PageTransition><UploadPage /></PageTransition>} />
         <Route path="/drive" element={<PageTransition><DriveFilesPage /></PageTransition>} />
         <Route path="/revoke" element={<PageTransition><RevokeAccessPage /></PageTransition>} />
         <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />

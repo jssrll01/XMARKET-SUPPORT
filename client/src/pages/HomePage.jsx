@@ -139,12 +139,7 @@ export default function HomePage() {
       </header>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger">
-        <button onClick={() => navigate('/upload')}
-          className="nm-btn !py-4 flex flex-col items-center gap-1">
-          <span className="text-2xl">☁️</span>
-          <span className="text-xs">Upload</span>
-        </button>
+      <div className="grid grid-cols-3 gap-3 mb-6 stagger">
         <button onClick={() => navigate('/drive')}
           className="nm-btn !py-4 flex flex-col items-center gap-1">
           <span className="text-2xl">🔗</span>
