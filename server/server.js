@@ -34,16 +34,30 @@ transporter.verify((err) => {
 // ============ GOOGLE DRIVE ============
 let driveClient = null;
 try {
-  const keyPath = path.join(__dirname, 'service-account.json');
-  if (fs.existsSync(keyPath)) {
-    const auth = new google.auth.GoogleAuth({
-      keyFile: keyPath,
+  let auth = null;
+
+  if (process.env.SERVICE_ACCOUNT_JSON) {
+    const creds = JSON.parse(process.env.SERVICE_ACCOUNT_JSON);
+    auth = new google.auth.GoogleAuth({
+      credentials: creds,
       scopes: ['https://www.googleapis.com/auth/drive'],
     });
-    driveClient = google.drive({ version: 'v3', auth });
-    console.log('✅ Google Drive API ready (share mode)');
+    console.log('✅ Google Drive API ready (via env var)');
   } else {
-    console.log('⚠️  service-account.json not found — Drive API disabled');
+    const keyPath = path.join(__dirname, 'service-account.json');
+    if (fs.existsSync(keyPath)) {
+      auth = new google.auth.GoogleAuth({
+        keyFile: keyPath,
+        scopes: ['https://www.googleapis.com/auth/drive'],
+      });
+      console.log('✅ Google Drive API ready (via file)');
+    } else {
+      console.log('⚠️  service-account.json not found — Drive API disabled');
+    }
+  }
+
+  if (auth) {
+    driveClient = google.drive({ version: 'v3', auth });
   }
 } catch (e) {
   console.error('❌ Drive init failed:', e.message);
