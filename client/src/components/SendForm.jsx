@@ -8,8 +8,11 @@ import { useSettings } from '../context/SettingsContext';
 import { parseCSV } from '../utils/csv';
 import { replaceVariables } from '../utils/variables';
 
-const API_URL = 'http://localhost:5000/api/send';
-const RETRY_URL = 'http://localhost:5000/api/retry';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+
+const API_URL = `${API_BASE}/api/send`;
+const RETRY_URL = `${API_BASE}/api/retry`;
 
 export default function SendForm() {
   const { settings } = useSettings();

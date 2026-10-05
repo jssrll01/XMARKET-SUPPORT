@@ -3,7 +3,10 @@ import ReceiverList from './ReceiverList';
 import ConfirmModal from './ConfirmModal';
 import { useSettings } from '../context/SettingsContext';
 
-const API_URL = 'http://localhost:5000/api/send-receipt';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+
+const API_URL = `${API_BASE}/api/send-receipt`;
 
 const emptyItem = { name: '', qty: 1, price: 0 };
 

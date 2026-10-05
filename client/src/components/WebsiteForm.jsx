@@ -4,7 +4,10 @@ import AttachmentUpload from './AttachmentUpload';
 import ConfirmModal from './ConfirmModal';
 import { useSettings } from '../context/SettingsContext';
 
-const API_URL = 'http://localhost:5000/api/send-website';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+
+const API_URL = `${API_BASE}/api/send-website`;
 
 export default function WebsiteForm() {
   const { settings } = useSettings();

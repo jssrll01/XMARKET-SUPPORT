@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
 
-const API_URL = 'http://localhost:5000/api/drive-upload';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+
+const API_URL = `${API_BASE}/api/drive-upload`;
 
 function formatBytes(bytes) {
   if (!bytes) return '0 B';
