@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import ReceiverList from './ReceiverList';
 import ConfirmModal from './ConfirmModal';
-import PaymentDropdown from './PaymentDropdown';
 import { useSettings } from '../context/SettingsContext';
 
 const API_URL = 'http://localhost:5000/api/send-receipt';
@@ -17,7 +16,8 @@ export default function ReceiptForm() {
   const [receivers, setReceivers] = useState(['']);
   const [items, setItems] = useState([{ ...emptyItem }]);
   const [discount, setDiscount] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('GCash');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [deliveryMethod, setDeliveryMethod] = useState('');
   const [note, setNote] = useState('');
   const [status, setStatus] = useState({ type: '', msg: '' });
   const [loading, setLoading] = useState(false);
@@ -58,6 +58,7 @@ export default function ReceiptForm() {
       discount: Number(discount) || 0,
       total,
       paymentMethod,
+      deliveryMethod,
       note,
       senderName: settings.senderName,
       senderCompany: settings.senderCompany,
@@ -285,16 +286,34 @@ export default function ReceiptForm() {
               placeholder="0.00"
             />
           </div>
-          <div className="relative z-20">
-            <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
-              Payment Method
-            </label>
-            <PaymentDropdown value={paymentMethod} onChange={setPaymentMethod} />
-          </div>
+          <div>
+          <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
+            Payment Method
+          </label>
+          <input
+            className="nm-input"
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            placeholder="GCash / Maya / Bank Transfer"
+          />
+        </div>
+
+        {/* Delivery Method */}
+        <div>
+          <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
+            Delivery Method
+          </label>
+          <input
+            className="nm-input"
+            value={deliveryMethod}
+            onChange={(e) => setDeliveryMethod(e.target.value)}
+            placeholder="Pickup / Lalamove / J\&T / Grab"
+          />
+        </div>
         </div>
 
         {/* Totals */}
-        <div className="nm-pressed p-5 rounded-2xl space-y-2 text-sm">
+        <div className="nm-pressed p-5 rounded-2xl space-y-2 text-sm relative z-10">
           <div className="flex justify-between text-gray-500">
             <span>Subtotal</span>
             <span>{fmt(subtotal)}</span>
