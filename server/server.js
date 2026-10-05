@@ -21,15 +21,30 @@ const upload = multer({
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-});
+const BREVO_KEY = process.env.BREVO_API_KEY;
 
-transporter.verify((err) => {
-  if (err) console.error('❌ Email transporter error:', err.message);
-  else console.log('✅ Email transporter ready');
-});
+const transporter = {
+  async sendMail({ from, to, subject, html, attachments = [] }) {
+    const m = String(from).match(/^"?(.*?)"?\s*<(.+)>$/);
+    const sender = m ? { name: m[1], email: m[2] } : { email: String(from) };
+    const body = { sender, to: [{ email: to }], subject, htmlContent: html };
+    if (attachments.length) {
+      body.attachment = attachments.map((a) => ({
+        name: a.filename,
+        content: (a.content ? Buffer.from(a.content) : fs.readFileSync(a.path)).toString('base64'),
+      }));
+    }
+    const r = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: { 'api-key': BREVO_KEY, 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) throw new Error(`Brevo ${r.status}: ${await r.text()}`);
+    return r.json();
+  },
+};
+
+console.log(BREVO_KEY ? '✅ Brevo email ready' : '❌ BREVO_API_KEY missing');
 
 // ============ GOOGLE DRIVE ============
 let driveClient = null;
