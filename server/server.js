@@ -37,7 +37,14 @@ try {
   let auth = null;
 
   if (process.env.SERVICE_ACCOUNT_JSON) {
-    const creds = JSON.parse(process.env.SERVICE_ACCOUNT_JSON);
+    let raw = process.env.SERVICE_ACCOUNT_JSON.trim();
+    let creds;
+    try {
+      creds = JSON.parse(raw);
+    } catch {
+      const decoded = Buffer.from(raw, 'base64').toString('utf8');
+      creds = JSON.parse(decoded);
+    }
     auth = new google.auth.GoogleAuth({
       credentials: creds,
       scopes: ['https://www.googleapis.com/auth/drive'],
